@@ -12,7 +12,7 @@
 
         var channel = pusher.subscribe('my-channel')
         channel.bind('my-event', function (data) {
-            alert(JSON.stringify(data))
+            alert(JSON.stringify(data.data))
         })
     </script>
 </head>
@@ -23,8 +23,8 @@
         name <code>my-event</code>.
     </p>
     <div>
-        {% for todo in todos %}
-            <p>{{todo.task}}</p>
+        {% for task in tasks %}
+            <p>{{task.task}}</p>
         {% endfor %}
     </div>
 </body>
