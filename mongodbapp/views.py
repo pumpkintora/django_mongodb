@@ -1,11 +1,16 @@
 from django.shortcuts import render
 
+import os
+import environ
 import time
 import pymongo
 import pusher
 
-client = pymongo.MongoClient(
-    'mongodb+srv://grenkiat:grenkiat@root-cluster.zi16t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+env = environ.Env()
+
+environ.Env.read_env(env_file=os.path.join('.env'))
+
+client = pymongo.MongoClient(env("MONGO_PATH"))
 
 db = client['cluster']
 
@@ -19,10 +24,10 @@ for obj in test_collection.find({}):
 print(tasks)
 
 pusher_client = pusher.Pusher(
-    app_id='1388554',
-    key='f00c4ec7239d17757971',
-    secret='4ad7cbcf6b3ba6e99a1c',
-    cluster='ap1',
+    app_id=env("PUSHER_ID"),
+    key=env("PUSHER_KEY"),
+    secret=env("PUSHER_SECRET"),
+    cluster=env("PUSHER_CLUSTER"),
     ssl=True
 )
 
